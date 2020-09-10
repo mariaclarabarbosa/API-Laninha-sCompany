@@ -1,4 +1,4 @@
-package com.laninhacompany.laninhacompany;
+package com.laninhacompany.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
