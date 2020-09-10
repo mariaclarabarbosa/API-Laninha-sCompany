@@ -1,10 +1,15 @@
 package com.laninhacompany.ecommerce.models;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +25,9 @@ public class Categoria {
 	
 	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
+	
+	@OneToMany(targetEntity = Produto.class, mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Produto> setProduto;
 	
 	public Integer getId() {
 		return id;
@@ -38,6 +46,12 @@ public class Categoria {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public Set<Produto> getSetProduto() {
+		return setProduto;
+	}
+	public void setSetProduto(Set<Produto> setProduto) {
+		this.setProduto = setProduto;
 	}
 	
 	
