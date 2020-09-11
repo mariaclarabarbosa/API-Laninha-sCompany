@@ -45,6 +45,10 @@ public class Cliente {
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
+	@JsonBackReference
+	@OneToMany(targetEntity = Pedido.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Pedido> setPedidos;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -92,6 +96,12 @@ public class Cliente {
 	}
 	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
 		this.setDepoimentos = setDepoimentos;
+	}
+	public Set<Pedido> getSetPedidos() {
+		return setPedidos;
+	}
+	public void setSetPedidos(Set<Pedido> setPedidos) {
+		this.setPedidos = setPedidos;
 	}
 	
 }
