@@ -1,11 +1,16 @@
 package com.laninhacompany.ecommerce.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "cliente")
@@ -30,6 +35,8 @@ public class Cliente {
 	@Column(name = "revendedor")
 	private Boolean revendedor;
 	
+	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	private Endereco endereco;
 	
 	public Integer getId() {
 		return id;
@@ -66,6 +73,12 @@ public class Cliente {
 	}
 	public void setRevendedor(Boolean revendedor) {
 		this.revendedor = revendedor;
+	}
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 	
 }
