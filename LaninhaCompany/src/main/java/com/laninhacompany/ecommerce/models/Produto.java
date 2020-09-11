@@ -1,14 +1,20 @@
 package com.laninhacompany.ecommerce.models;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -41,6 +47,10 @@ public class Produto {
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
+	
+	@JsonBackReference
+	@OneToMany(targetEntity = Depoimento.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Depoimento> setDepoimentos;
 	
 	public Integer getId() {
 		return id;
@@ -90,6 +100,11 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
+	public Set<Depoimento> getSetDepoimentos() {
+		return setDepoimentos;
+	}
+	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
+		this.setDepoimentos = setDepoimentos;
+	}
 	
 }

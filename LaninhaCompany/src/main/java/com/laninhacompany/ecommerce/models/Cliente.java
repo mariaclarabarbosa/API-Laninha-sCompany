@@ -1,5 +1,7 @@
 package com.laninhacompany.ecommerce.models;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -37,6 +40,10 @@ public class Cliente {
 	
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Endereco endereco;
+	
+	@JsonBackReference
+	@OneToMany(targetEntity = Depoimento.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Depoimento> setDepoimentos;
 	
 	public Integer getId() {
 		return id;
@@ -79,6 +86,12 @@ public class Cliente {
 	}
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	public Set<Depoimento> getSetDepoimentos() {
+		return setDepoimentos;
+	}
+	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
+		this.setDepoimentos = setDepoimentos;
 	}
 	
 }
