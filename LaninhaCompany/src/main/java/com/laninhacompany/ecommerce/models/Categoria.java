@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -26,6 +28,7 @@ public class Categoria {
 	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
 	
+	@JsonBackReference
 	@OneToMany(targetEntity = Produto.class, mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Produto> setProduto;
 	

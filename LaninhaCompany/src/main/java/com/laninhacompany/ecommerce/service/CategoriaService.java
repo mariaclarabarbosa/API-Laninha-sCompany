@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.laninhacompany.ecommerce.models.Categoria;
-import com.laninhacompany.ecommerce.repositoy.CategoriaRepository;
+import com.laninhacompany.ecommerce.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
