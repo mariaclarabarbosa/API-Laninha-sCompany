@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cliente")
@@ -38,12 +39,14 @@ public class Cliente {
 	@Column(name = "revendedor")
 	private Boolean revendedor;
 	
+	@JsonManagedReference(value = "end")
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Endereco endereco;
 	
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
+	@JsonBackReference(value = "client")
 	@OneToMany(targetEntity = Pedido.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Pedido> setPedidos;
 	
@@ -89,4 +92,17 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	public Set<Depoimento> getSetDepoimentos() {
+		return setDepoimentos;
+	}
+	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
+		this.setDepoimentos = setDepoimentos;
+	}
+	public Set<Pedido> getSetPedidos() {
+		return setPedidos;
+	}
+	public void setSetPedidos(Set<Pedido> setPedidos) {
+		this.setPedidos = setPedidos;
+	}
+	
 }

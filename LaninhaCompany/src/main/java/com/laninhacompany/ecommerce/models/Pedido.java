@@ -33,12 +33,12 @@ public class Pedido {
 	@Column(name = "data", nullable = false)
 	private LocalDate data_pedido = LocalDate.now();
 	
-	@JsonIgnore
+	@JsonManagedReference(value = "pag")
 	@ManyToOne()
 	@JoinColumn(name = "id_pagamento", referencedColumnName = "id")
 	private Pagamento pagamento;
 	
-	@JsonIgnore
+	@JsonManagedReference(value = "client")
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
@@ -84,6 +84,14 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Set<Carrinho> getSetCarrinho() {
+		return setCarrinho;
+	}
+
+	public void setSetCarrinho(Set<Carrinho> setCarrinho) {
+		this.setCarrinho = setCarrinho;
 	}
 
 	

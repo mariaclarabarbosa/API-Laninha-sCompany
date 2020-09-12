@@ -28,6 +28,7 @@ public class Categoria {
 	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
 	
+	
 	@OneToMany(targetEntity = Produto.class, mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Produto> setProduto;
 	

@@ -44,7 +44,7 @@ public class Produto {
 	@Column(name = "valor", nullable = false)
 	private Double valor;
 	
-	@JsonIgnore
+	
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
@@ -53,7 +53,7 @@ public class Produto {
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
-	
+	@JsonBackReference(value = "prod")
 	@OneToMany(targetEntity = Carrinho.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Carrinho> setCarrinhos;
 	
@@ -105,5 +105,12 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	public Set<Depoimento> getSetDepoimentos() {
+		return setDepoimentos;
+	}
+	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
+		this.setDepoimentos = setDepoimentos;
+	}
+	
 	
 }

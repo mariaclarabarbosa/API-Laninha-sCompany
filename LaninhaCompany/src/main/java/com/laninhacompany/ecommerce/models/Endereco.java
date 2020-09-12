@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -32,7 +33,7 @@ public class Endereco {
 	@Column(name = "cep", nullable = false, length = 8)
 	private Integer cep;
 	
-	@JsonIgnore
+	@JsonBackReference(value = "end")
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
