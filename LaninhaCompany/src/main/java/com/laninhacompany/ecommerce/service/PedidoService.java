@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.laninhacompany.ecommerce.exceptions.CodigoNotFoundException;
+import com.laninhacompany.ecommerce.exceptions.NullObjectException;
 import com.laninhacompany.ecommerce.form.CarrinhoForm;
 import com.laninhacompany.ecommerce.form.PedidoCarrinhoForm;
 import com.laninhacompany.ecommerce.form.PedidoForm;
@@ -34,7 +36,12 @@ public class PedidoService {
 	@Autowired
 	PagamentoRepository pagamentoRepository;
 	
-	public void fazerPedido(PedidoCarrinhoForm pedidoCarrinhoForm) {
+	public String fazerPedido(PedidoCarrinhoForm pedidoCarrinhoForm) throws NullObjectException {
+		
+		if(pedidoCarrinhoForm == null) {
+			throw new NullObjectException("É necessário escolher um produto e a quantidade para fazer um pedido!");
+		}
+		
 		Pedido pedido = new Pedido();
 		pedido.setData_pedido(pedidoCarrinhoForm.getData_pedido());
 		Optional<Cliente> opC = clienteRepository.findById(pedidoCarrinhoForm.getId_cliente());
@@ -57,12 +64,20 @@ public class PedidoService {
 		
 		pedidoRepository.save(pedido);
 		carrinhoRepository.save(carrinho);
+		return "Pedido adicionado com sucesso!";
 	}
 
-	public void adicionarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) {
-		Optional<Pedido> opPed = pedidoRepository.findById(id);
-		Pedido pedido = opPed.get();
+	public String adicionarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) throws NullObjectException, CodigoNotFoundException {
+		
+		if(carrinhoForm == null) {
+			throw new NullObjectException("É necessário escolher um produto e a quantidade para adicionar no pedido!");
+		}
+		
+		Pedido pedido = listarPedidoPorId(id);
 		Optional<Produto> opProd = produtoRepository.findById(carrinhoForm.getId_produto());
+		if(opProd.isEmpty()) {
+			throw new CodigoNotFoundException("A empresa não trabalha com o produto pedido!");
+		}
 		Produto produto = opProd.get();
 		
 		Carrinho carrinho = new Carrinho();
@@ -75,6 +90,7 @@ public class PedidoService {
 		
 		pedidoRepository.save(pedido);
 		carrinhoRepository.save(carrinho);
+		return "Item adicionado no pedido com sucesso!";
 		
 	}
 
@@ -82,13 +98,16 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 
-	public Pedido listarPedidoPorId(Integer id) {
+	public Pedido listarPedidoPorId(Integer id) throws CodigoNotFoundException {
 		Optional<Pedido> opPed = pedidoRepository.findById(id);
+		if(opPed.isEmpty()) {
+			throw new CodigoNotFoundException("Não foi encontrado um pedido com o id" + id);
+		}
 		Pedido pedido = opPed.get();
 		return pedido;
 	}
 
-	public Carrinho listarCarrinhoPorId(Integer id, Integer idC) {
+	public Carrinho listarCarrinhoPorId(Integer id, Integer idC) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
 		List<Carrinho> listaCarrinho = carrinhoRepository.findAllByPedido(pedido);
 		for(Carrinho carrinho : listaCarrinho) {
@@ -96,10 +115,10 @@ public class PedidoService {
 				return carrinho;
 			}
 		}
-		return null;
+		throw new CodigoNotFoundException("Não foi encontrado o item especificado no pedido");
 	}
 
-	public void atualizarPedido(Integer id, PedidoForm pedidoForm) {
+	public String atualizarPedido(Integer id, PedidoForm pedidoForm) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
 
 		if(pedidoForm.getId_pagamento() != null) {
@@ -110,11 +129,12 @@ public class PedidoService {
 			pedido.setData_pedido(pedidoForm.getData_pedido());
 		}
 		pedidoRepository.save(pedido);
+		return "Pedido atualizado com sucesso!";
 		
 	}
 	
 
-	public void atualizarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) {
+	public String atualizarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
 		Carrinho carrinho = listarCarrinhoPorId(carrinhoForm.getId(), id);
 		Produto produtoVelho = carrinho.getProduto(); //Produto registrado anteriormente
@@ -146,13 +166,16 @@ public class PedidoService {
 		
 		pedidoRepository.save(pedido);
 		carrinhoRepository.save(carrinho);
+		return "Item atualizado com sucesso!";
 	}
 
-	public void deletarPedido(Integer id) {
-		pedidoRepository.deleteById(id);
+	public String deletarPedido(Integer id) throws CodigoNotFoundException {
+		Pedido pedido = listarPedidoPorId(id);
+		pedidoRepository.delete(pedido);
+		return "Pedido deletado com sucesso!";
 	}
 
-	public void deletarProdutoNoPedido(Integer id, Integer idC) {
+	public String deletarProdutoNoPedido(Integer id, Integer idC) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
 		Carrinho carrinho = listarCarrinhoPorId(idC, id);
 		Produto p = carrinho.getProduto();
@@ -160,6 +183,7 @@ public class PedidoService {
 		pedido.setTotal(novoValor);
 		pedidoRepository.save(pedido);
 		carrinhoRepository.delete(carrinho);
+		return "Item deletado do pedido com sucesso!";
 	}
 	
 	
