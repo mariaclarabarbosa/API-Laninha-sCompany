@@ -41,11 +41,9 @@ public class Cliente {
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Endereco endereco;
 	
-	@JsonBackReference
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
-	@JsonBackReference
 	@OneToMany(targetEntity = Pedido.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Pedido> setPedidos;
 	
@@ -91,17 +89,4 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public Set<Depoimento> getSetDepoimentos() {
-		return setDepoimentos;
-	}
-	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
-		this.setDepoimentos = setDepoimentos;
-	}
-	public Set<Pedido> getSetPedidos() {
-		return setPedidos;
-	}
-	public void setSetPedidos(Set<Pedido> setPedidos) {
-		this.setPedidos = setPedidos;
-	}
-	
 }

@@ -53,7 +53,7 @@ public class PedidoController {
 		pedidoService.atualizarPedido(id, pedidoForm);
 	}
 	
-	@PutMapping("/{id}-{idC}")
+	@PutMapping("/{id}-{idC}") //Não tá trocando o valor total
 	public void atualizarProdutoNoPedido(@PathVariable Integer id, @PathParam("idC") Integer idC, @RequestBody CarrinhoForm carrinhoForm) {
 		pedidoService.atualizarProdutoNoPedido(id, idC, carrinhoForm);
 	}

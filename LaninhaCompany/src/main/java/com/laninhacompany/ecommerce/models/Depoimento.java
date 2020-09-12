@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -22,12 +23,12 @@ public class Depoimento {
 	@Column(name = "mensagem", nullable = false, length = 400)
 	private String mensagem;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_produto", referencedColumnName = "id")
 	private Produto produto;

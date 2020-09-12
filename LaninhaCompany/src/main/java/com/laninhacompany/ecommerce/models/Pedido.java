@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -32,17 +33,16 @@ public class Pedido {
 	@Column(name = "data", nullable = false)
 	private LocalDate data_pedido = LocalDate.now();
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_pagamento", referencedColumnName = "id")
 	private Pagamento pagamento;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
 	
-	@JsonBackReference
 	@OneToMany(targetEntity = Carrinho.class, mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Carrinho> setCarrinho;
 
@@ -86,12 +86,5 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 
-	public Set<Carrinho> getSetCarrinho() {
-		return setCarrinho;
-	}
-
-	public void setSetCarrinho(Set<Carrinho> setCarrinho) {
-		this.setCarrinho = setCarrinho;
-	}
 	
 }

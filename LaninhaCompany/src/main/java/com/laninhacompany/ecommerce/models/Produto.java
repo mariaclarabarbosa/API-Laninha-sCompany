@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -43,16 +44,16 @@ public class Produto {
 	@Column(name = "valor", nullable = false)
 	private Double valor;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
 	
-	@JsonBackReference
+	
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
-	@JsonBackReference
+	
 	@OneToMany(targetEntity = Carrinho.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Carrinho> setCarrinhos;
 	
@@ -103,12 +104,6 @@ public class Produto {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
-	}
-	public Set<Depoimento> getSetDepoimentos() {
-		return setDepoimentos;
-	}
-	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
-		this.setDepoimentos = setDepoimentos;
 	}
 	
 }
