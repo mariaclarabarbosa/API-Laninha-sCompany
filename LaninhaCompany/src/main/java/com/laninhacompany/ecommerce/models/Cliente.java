@@ -92,12 +92,7 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public Set<Depoimento> getSetDepoimentos() {
-		return setDepoimentos;
-	}
-	public void setSetDepoimentos(Set<Depoimento> setDepoimentos) {
-		this.setDepoimentos = setDepoimentos;
-	}
+
 	public Set<Pedido> getSetPedidos() {
 		return setPedidos;
 	}

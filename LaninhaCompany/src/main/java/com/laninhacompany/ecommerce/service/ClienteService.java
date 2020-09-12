@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.laninhacompany.ecommerce.exceptions.CodigoNotFoundException;
+import com.laninhacompany.ecommerce.exceptions.NullObjectException;
 import com.laninhacompany.ecommerce.models.Cliente;
 import com.laninhacompany.ecommerce.repository.ClienteRepository;
 
@@ -15,21 +17,28 @@ public class ClienteService {
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	public void cadastrarCliente(Cliente cliente) {
-		clienteRepository.save(cliente);
+	public String cadastrarCliente(Cliente cliente) throws NullObjectException {
+		if(cliente != null) {
+			clienteRepository.save(cliente);
+			return "Cliente cadastrado com sucesso!";
+		}
+		throw new NullObjectException("Para o cadastro do cliente, os campos devem ser preenchidos!");
 	}
 
 	public List<Cliente> listarClientes() {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente listarClientePorId(Integer id) {
+	public Cliente listarClientePorId(Integer id) throws CodigoNotFoundException {
 		Optional<Cliente> opC = clienteRepository.findById(id);
-		Cliente cliente = opC.get();
-		return cliente;
+		if(opC.isPresent()) {
+			Cliente cliente = opC.get();
+			return cliente;
+		}
+		throw new CodigoNotFoundException("Não foi encontrado um cliente com o id" + id);
 	}
 
-	public void atualizarCliente(Integer id, Cliente cliente) {
+	public String atualizarCliente(Integer id, Cliente cliente) throws CodigoNotFoundException {
 		Cliente cDB = listarClientePorId(id);
 		
 		if(cliente.getCelular() != null) {
@@ -49,10 +58,14 @@ public class ClienteService {
 		}
 		
 		clienteRepository.save(cDB);
+		return "Cliente atualizado com sucesso!";
 		
 	}
 
-	public void deletarCliente(Integer id) {
-		clienteRepository.deleteById(id);
+	public String deletarCliente(Integer id) throws CodigoNotFoundException {
+		Cliente c = listarClientePorId(id);
+		clienteRepository.delete(c);
+		return "Cliente deletado com sucesso!";
+		
 	}
 }
