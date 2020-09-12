@@ -88,10 +88,15 @@ public class PedidoService {
 		return pedido;
 	}
 
-	public Carrinho listarCarrinhoPorId(Integer id) {
-		Optional<Carrinho> opC = carrinhoRepository.findById(id);
-		Carrinho carrinho = opC.get();
-		return carrinho;
+	public Carrinho listarCarrinhoPorId(Integer id, Integer idC) {
+		Pedido pedido = listarPedidoPorId(id);
+		List<Carrinho> listaCarrinho = carrinhoRepository.findAllByPedido(pedido);
+		for(Carrinho carrinho : listaCarrinho) {
+			if(carrinho.getId() == idC) {
+				return carrinho;
+			}
+		}
+		return null;
 	}
 
 	public void atualizarPedido(Integer id, PedidoForm pedidoForm) {
@@ -109,9 +114,9 @@ public class PedidoService {
 	}
 	
 
-	public void atualizarProdutoNoPedido(Integer id, Integer idC, CarrinhoForm carrinhoForm) {
+	public void atualizarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) {
 		Pedido pedido = listarPedidoPorId(id);
-		Carrinho carrinho = listarCarrinhoPorId(idC);
+		Carrinho carrinho = listarCarrinhoPorId(carrinhoForm.getId(), id);
 		Produto produtoVelho = carrinho.getProduto(); //Produto registrado anteriormente
 		Double velhoTotal = pedido.getTotal() - (carrinho.getUnidades() * produtoVelho.getValor()); //O valor como estava antes da modificação 
 		Produto produtoNovo = new Produto(); //Para receber o novo produto, caso seja modificado
@@ -149,7 +154,7 @@ public class PedidoService {
 
 	public void deletarProdutoNoPedido(Integer id, Integer idC) {
 		Pedido pedido = listarPedidoPorId(id);
-		Carrinho carrinho = listarCarrinhoPorId(idC);
+		Carrinho carrinho = listarCarrinhoPorId(idC, id);
 		Produto p = carrinho.getProduto();
 		Double novoValor = pedido.getTotal() - (carrinho.getUnidades() * p.getValor());
 		pedido.setTotal(novoValor);

@@ -2,8 +2,6 @@ package com.laninhacompany.ecommerce.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.laninhacompany.ecommerce.form.CarrinhoForm;
 import com.laninhacompany.ecommerce.form.PedidoCarrinhoForm;
 import com.laninhacompany.ecommerce.form.PedidoForm;
+import com.laninhacompany.ecommerce.models.Carrinho;
 import com.laninhacompany.ecommerce.models.Pedido;
 import com.laninhacompany.ecommerce.service.PedidoService;
 
@@ -48,14 +47,19 @@ public class PedidoController {
 		return pedidoService.listarPedidoPorId(id);
 	}
 	
+	@GetMapping("/{id}/{idC}")
+	public Carrinho listarCarrinhoPorId(@PathVariable Integer id, @PathVariable Integer idC) {
+		return pedidoService.listarCarrinhoPorId(id, idC);
+	}
+	
 	@PatchMapping("/{id}")
 	public void atualizarPedido(@PathVariable Integer id, @RequestBody PedidoForm pedidoForm) {
 		pedidoService.atualizarPedido(id, pedidoForm);
 	}
 	
-	@PutMapping("/{id}-{idC}") //Não tá trocando o valor total
-	public void atualizarProdutoNoPedido(@PathVariable Integer id, @PathParam("idC") Integer idC, @RequestBody CarrinhoForm carrinhoForm) {
-		pedidoService.atualizarProdutoNoPedido(id, idC, carrinhoForm);
+	@PutMapping("/{id}")
+	public void atualizarProdutoNoPedido(@PathVariable Integer id, @RequestBody CarrinhoForm carrinhoForm) {
+		pedidoService.atualizarProdutoNoPedido(id, carrinhoForm);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -63,8 +67,8 @@ public class PedidoController {
 		pedidoService.deletarPedido(id);
 	}
 	
-	@DeleteMapping("/{id}-{idC}")
-	public void deletarProdutoNoPedido(@PathVariable Integer id, @PathParam("idC") Integer idC) {
+	@DeleteMapping("/{id}/{idC}")
+	public void deletarProdutoNoPedido(@PathVariable Integer id, @PathVariable Integer idC) {
 		pedidoService.deletarProdutoNoPedido(id, idC);
 	}
 }
