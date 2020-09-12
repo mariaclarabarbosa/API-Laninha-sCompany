@@ -28,7 +28,6 @@ public class Carrinho {
 	@JoinColumn(name = "id_pedido", referencedColumnName = "id")
 	private Pedido pedido;
 	
-	@JsonManagedReference(value = "prod")
 	@ManyToOne()
 	@JoinColumn(name = "id_produto", referencedColumnName = "id")
 	private Produto produto;

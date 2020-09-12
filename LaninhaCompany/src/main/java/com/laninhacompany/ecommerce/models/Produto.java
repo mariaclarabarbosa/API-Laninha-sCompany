@@ -53,7 +53,6 @@ public class Produto {
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
-	@JsonBackReference(value = "prod")
 	@OneToMany(targetEntity = Carrinho.class, mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Carrinho> setCarrinhos;
 	

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.laninhacompany.ecommerce.exceptions.CodigoNotFoundException;
 import com.laninhacompany.ecommerce.exceptions.EnderecoNotFoundException;
 import com.laninhacompany.ecommerce.exceptions.NullObjectException;
 import com.laninhacompany.ecommerce.form.EnderecoForm;
@@ -26,7 +27,7 @@ public class EnderecoController {
 	EnderecoService enderecoService;
 	
 	@PostMapping
-	public ResponseEntity<String> inserirEndereco(@RequestBody EnderecoForm enderecoForm) throws NullObjectException {
+	public ResponseEntity<String> inserirEndereco(@RequestBody EnderecoForm enderecoForm) throws NullObjectException, CodigoNotFoundException {
 		String msg = enderecoService.inserirEndereco(enderecoForm);
 		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
 	}

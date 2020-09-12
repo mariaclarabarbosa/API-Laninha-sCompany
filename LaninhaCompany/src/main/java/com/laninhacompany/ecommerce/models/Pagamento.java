@@ -25,7 +25,6 @@ public class Pagamento {
 	@Column(name = "tipo", nullable = false, length = 50)
 	private String tipo;
 	
-	@JsonBackReference(value = "pag")
 	@OneToMany(targetEntity = Pedido.class, mappedBy = "pagamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Pedido> setPedidos;
 

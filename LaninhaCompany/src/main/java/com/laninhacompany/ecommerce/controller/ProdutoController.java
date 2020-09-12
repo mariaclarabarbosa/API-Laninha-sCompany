@@ -46,7 +46,7 @@ public class ProdutoController {
 		return new ResponseEntity<Produto>(p, HttpStatus.OK);
 	}
 	
-	@GetMapping("//{id}")
+	@GetMapping("/-/{id}")
 	public ResponseEntity<List<Depoimento>> listarDepoimentosDoProduto(@PathVariable Integer id) throws CodigoNotFoundException{
 		List<Depoimento> listaDepoimentos = produtoService.listarDepoimentosDoProduto(id);
 		return new ResponseEntity<List<Depoimento>>(listaDepoimentos, HttpStatus.OK);

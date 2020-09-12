@@ -23,7 +23,7 @@ public class EnderecoService {
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	public String inserirEndereco(EnderecoForm enderecoForm) throws NullObjectException {
+	public String inserirEndereco(EnderecoForm enderecoForm) throws NullObjectException, CodigoNotFoundException {
 		
 		if(enderecoForm == null) {
 			throw new NullObjectException("É necessário preencher todos os campos!");
@@ -34,6 +34,9 @@ public class EnderecoService {
 		endereco.setLogradouro(enderecoForm.getLogradouro());
 		endereco.setNumero(enderecoForm.getNumero());
 		Optional<Cliente> opC = clienteRepository.findById(enderecoForm.getId_cliente());
+		if(opC.isEmpty()) {
+			throw new CodigoNotFoundException("Não há como adicionar um endereço para um cliente inexistente!");
+		}
 		Cliente cliente = opC.get();
 		endereco.setCliente(cliente);
 		enderecoRepository.save(endereco);

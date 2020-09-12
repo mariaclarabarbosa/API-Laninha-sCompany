@@ -33,7 +33,7 @@ public class Endereco {
 	@Column(name = "cep", nullable = false, length = 8)
 	private Integer cep;
 	
-	@JsonBackReference(value = "end")
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;

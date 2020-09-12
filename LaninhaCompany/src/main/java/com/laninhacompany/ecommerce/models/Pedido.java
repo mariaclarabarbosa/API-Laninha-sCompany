@@ -33,12 +33,12 @@ public class Pedido {
 	@Column(name = "data", nullable = false)
 	private LocalDate data_pedido = LocalDate.now();
 	
-	@JsonManagedReference(value = "pag")
+	
 	@ManyToOne()
 	@JoinColumn(name = "id_pagamento", referencedColumnName = "id")
 	private Pagamento pagamento;
 	
-	@JsonManagedReference(value = "client")
+	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;

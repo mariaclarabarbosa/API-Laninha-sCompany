@@ -136,7 +136,7 @@ public class PedidoService {
 
 	public String atualizarProdutoNoPedido(Integer id, CarrinhoForm carrinhoForm) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
-		Carrinho carrinho = listarCarrinhoPorId(carrinhoForm.getId(), id);
+		Carrinho carrinho = listarCarrinhoPorId(id, carrinhoForm.getId());
 		Produto produtoVelho = carrinho.getProduto(); //Produto registrado anteriormente
 		Double velhoTotal = pedido.getTotal() - (carrinho.getUnidades() * produtoVelho.getValor()); //O valor como estava antes da modificação 
 		Produto produtoNovo = new Produto(); //Para receber o novo produto, caso seja modificado
@@ -177,7 +177,7 @@ public class PedidoService {
 
 	public String deletarProdutoNoPedido(Integer id, Integer idC) throws CodigoNotFoundException {
 		Pedido pedido = listarPedidoPorId(id);
-		Carrinho carrinho = listarCarrinhoPorId(idC, id);
+		Carrinho carrinho = listarCarrinhoPorId(id, idC);
 		Produto p = carrinho.getProduto();
 		Double novoValor = pedido.getTotal() - (carrinho.getUnidades() * p.getValor());
 		pedido.setTotal(novoValor);

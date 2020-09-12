@@ -39,14 +39,12 @@ public class Cliente {
 	@Column(name = "revendedor")
 	private Boolean revendedor;
 	
-	@JsonManagedReference(value = "end")
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Endereco endereco;
 	
 	@OneToMany(targetEntity = Depoimento.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Depoimento> setDepoimentos;
 	
-	@JsonBackReference(value = "client")
 	@OneToMany(targetEntity = Pedido.class, mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Pedido> setPedidos;
 	
@@ -93,11 +91,4 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
-	public Set<Pedido> getSetPedidos() {
-		return setPedidos;
-	}
-	public void setSetPedidos(Set<Pedido> setPedidos) {
-		this.setPedidos = setPedidos;
-	}
-	
 }
