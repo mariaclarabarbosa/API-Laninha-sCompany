@@ -1,18 +1,5 @@
-# Projeto final da disciplina de Java 2
-Projeto final da matéria Java 2 utilizando PostgreSQL, Spring, Maven e Swagger na [Residência de Software](http://serratec.org/residencia-de-software/).
-
-- Feito em grupo com [Karine do Valle Sóre](https://github.com/KarinedoValle), [Wenny Campos Teixeira](https://github.com/wennycampos), [Luis Felipe Granja](https://github.com/lfcgranja) e [Thiago Probst Coelho Vieira](https://github.com/ThiagoProbst).
-
-------------------------------------------------------------------------------------------------------------------------------------------
-Conteúdo do trabalho:
-
-Criação de API, utilizando Spring Boot, que atenda às funcionalidades descritas na Opção 1.
-
-# Premissas
-
-Para este trabalho deverá ser utilizado o banco de dados criado na disciplina de banco de dados, conforme detalhamento abaixo.
-
------------------------------------------------------------------------------------------------------------------------------------------
+# API Laninhas's Company
+--------------------------------------------------------------------------------------------------------------------
 
 Uma empresa do comércio varejista deseja realizar a venda de seus produtos pela internet e para isso precisa de um sistema capaz de realizar o controle de estoque e cadastro de clientes. A empresa é responsável pela produção de seus próprios produtos e por isso não precisa registrar dados de fornecedores externos. O sistema não tem como objetivo registrar detalhes da produção. Sendo assim, a seguir são descritos os requisitos e os dados que a empresa julga serem necessários para o funcionamento do sistema:
 
